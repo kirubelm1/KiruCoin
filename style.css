@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+nav {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #4CAF50;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 10px 0;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress {
+    height: 100%;
+    background: #4CAF50;
+    width: 0;
+    transition: width 0.3s;
+}
+
+#coin-animation {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    width: 200px;
+}
