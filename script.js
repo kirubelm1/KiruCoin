@@ -185,4 +185,6 @@ class KiruCoin {
 }
 
 // Initialize the cryptocurrency
+
 const kiruCoin = new KiruCoin();
+console.log("Kirubel Mesfin Production")
