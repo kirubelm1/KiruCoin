@@ -1,30 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiruCoin - Mining</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KiruCoin • Mining</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <a href="index.html">Mining</a>
-            <a href="wallet.html">Wallet</a>
-            <a href="share.html">Share</a>
-        </nav>
-        <h1>KiruCoin Mining</h1>
-        <div class="card">
-            <h2>Mining Status</h2>
-            <p>Username: <span id="username"></span></p>
-            <p>Balance: <span id="balance">0</span> KIRU</p>
-            <div class="progress-bar">
-                <div class="progress" id="miningProgress"></div>
-            </div>
-            <div id="coin-animation"></div>
-            <button id="mineButton">Start Mining</button>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">K</div>
+        <div>
+          <div class="title">KiruCoin</div>
+          <div class="subtitle">Mining • Wallet • Share</div>
         </div>
-    </div>
-    <script src="script.js"></script>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html" class="active">Mining</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="share.html">Share</a>
+      </nav>
+
+      <div class="controls">
+        <button id="themeToggle" class="icon-btn" title="Toggle theme">🌗</button>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <!-- Left column: mining card -->
+      <section class="card mining-card" aria-labelledby="mining-heading">
+        <div class="card-head">
+          <h1 id="mining-heading">Mining Dashboard</h1>
+          <div class="user-chip">User: <strong id="username">—</strong></div>
+        </div>
+
+        <div class="mining-body">
+          <div class="balance-block">
+            <div class="balance-label">Balance</div>
+            <div class="balance-amount"><span id="balance">0</span> <small>KIRU</small></div>
+            <div class="balance-sub">Address: <span id="walletAddressShort">—</span>
+              <button class="small" id="copyAddressBtn">Copy</button>
+            </div>
+          </div>
+
+          <div class="visuals">
+            <div class="circular" id="circular">
+              <svg viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7CFFB2"/>
+                    <stop offset="1" stop-color="#00D2FF"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="50" class="bg"/>
+                <circle id="circProgress" cx="60" cy="60" r="50" class="fg"/>
+                <text x="60" y="68" text-anchor="middle" id="circText" class="circText">0%</text>
+              </svg>
+              <div class="coin" id="coinAnim">💰</div>
+            </div>
+
+            <div class="progress-vertical">
+              <label>Mining progress</label>
+              <div class="bar-wrap">
+                <div class="bar-bg">
+                  <div class="bar-fill" id="miningProgress"></div>
+                </div>
+                <div class="progress-meta">
+                  <span id="progressPercent">0%</span>
+                  <span id="nextReward">Next: +1 KIRU</span>
+                </div>
+              </div>
+
+              <div class="controls-row">
+                <button id="mineButton" class="primary">Start Mining</button>
+                <button id="stopAll" class="ghost">Reset Progress</button>
+              </div>
+
+              <div class="speed-row">
+                <label>Speed</label>
+                <input id="speedRange" type="range" min="1" max="20" value="6">
+                <span id="speedLabel">6</span>
+              </div>
+
+              <div class="toggles">
+                <label><input id="autoToggle" type="checkbox"> Auto-mining</label>
+                <label><input id="soundToggle" type="checkbox"> Sound</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-foot">
+          <div class="history-head">Transactions</div>
+          <div class="history-actions">
+            <button id="exportCsv" class="small">Export CSV</button>
+            <button id="clearHistory" class="small ghost">Clear</button>
+          </div>
+        </div>
+
+        <ul id="txList" class="tx-list" aria-live="polite"></ul>
+      </section>
+
+      <!-- Right column: stats and settings -->
+      <aside class="card side-card">
+        <h2>Quick Stats</h2>
+
+        <div class="stat">
+          <div class="label">Wallet</div>
+          <div id="walletAddress" class="mono">—</div>
+          <div class="meta-row">
+            <button id="regenWallet" class="small">Regenerate</button>
+            <button id="exportWallet" class="small ghost">Export</button>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="label">Session</div>
+          <div id="sessionTime">0s</div>
+        </div>
+
+        <div class="stat">
+          <div class="label">Leaderboard (Local)</div>
+          <ol id="leaderboard" class="leaderboard small-list"></ol>
+        </div>
+
+        <div class="stat">
+          <div class="label">Settings</div>
+          <div class="setting">
+            <label>Mining reward</label>
+            <input id="rewardInput" type="number" min="0.1" step="0.1" value="1">
+          </div>
+          <div class="setting">
+            <label>Auto-claim threshold</label>
+            <input id="autoClaimInput" type="number" min="0" step="0.1" value="0">
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="label">Tips</div>
+          <ul class="tips">
+            <li>Press <kbd>M</kbd> to toggle mining.</li>
+            <li>Increase speed for faster progress but smaller increments.</li>
+            <li>Export CSV to backup transactions.</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      Built with ❤️ by KiruCoin UI — demo only. Local data stored in <code>localStorage</code>.
+    </footer>
+  </div>
+
+  <audio id="coinSound" src="" preload="auto"></audio>
+  <script src="script.js"></script>
 </body>
 </html>
